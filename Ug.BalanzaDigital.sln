@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ug.BalanzaDigital.Gestor", "Ug.BalanzaDigital.Gestor\Ug.BalanzaDigital.Gestor.csproj", "{6220CCD0-389A-47AB-AB11-80C519FEE329}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ug.BalanzaDigital.Data", "Ug.BalanzaDigital.Data\Ug.BalanzaDigital.Data.csproj", "{2E20D77C-E04F-49FC-ACD4-1F040BFE3D2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ug.BalanzaDigital.Contracts", "Ug.BalanzaDigital.Contracts\Ug.BalanzaDigital.Contracts.csproj", "{48A993FC-3BAA-4E42-8A7F-261B76818742}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6220CCD0-389A-47AB-AB11-80C519FEE329}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6220CCD0-389A-47AB-AB11-80C519FEE329}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6220CCD0-389A-47AB-AB11-80C519FEE329}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6220CCD0-389A-47AB-AB11-80C519FEE329}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E20D77C-E04F-49FC-ACD4-1F040BFE3D2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E20D77C-E04F-49FC-ACD4-1F040BFE3D2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E20D77C-E04F-49FC-ACD4-1F040BFE3D2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E20D77C-E04F-49FC-ACD4-1F040BFE3D2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48A993FC-3BAA-4E42-8A7F-261B76818742}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48A993FC-3BAA-4E42-8A7F-261B76818742}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48A993FC-3BAA-4E42-8A7F-261B76818742}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48A993FC-3BAA-4E42-8A7F-261B76818742}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

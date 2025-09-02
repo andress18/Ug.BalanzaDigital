@@ -1,0 +1,94 @@
+﻿@page "/Usuarios/Crear"
+@page "/Usuarios/Editar/{Id:int?}"
+@using Ug.BalanzaDigital.Data.Entities
+@using Ug.BalanzaDigital.Data
+@inject Repository<Usuario> UsuarioRepository
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<h3>@(!Id.HasValue ? "Crear Usuario" : "Editar Usuario")</h3>
+
+<form method="post" @formname="UserForm" @onsubmit="GuardarUsuario">
+    <AntiforgeryToken/>
+
+    <div class="mb-2">
+        <label class="form-label">Nombre de usuario</label>
+        <InputText class="form-control" @bind-Value="Usuario!.Username" required/>
+    </div>
+    <div class="mb-2">
+        <label class="form-label">Contraseña</label>
+        <InputText class="form-control" @bind-Value="Usuario!.Password" type="password" required/>
+    </div>
+    <div class="mb-2">
+        <label class="form-label">Email</label>
+        <InputText class="form-control" @bind-Value="Usuario!.Email" type="email"/>
+    </div>
+    <div class="mb-2">
+        <label class="form-label">Comuna</label>
+        <InputText class="form-control" @bind-Value="Usuario!.Comuna" required/>
+    </div>
+    <div class="mb-2">
+        <label class="form-label">Rol</label>
+        <InputNumber class="form-control" @bind-Value="Usuario!.RolId" required/>
+    </div>
+    <div class="mb-2">
+        <label class="form-label">Estado</label>
+        <InputSelect class="form-select" @bind-Value="Usuario!.Estado">
+            <option value="">Seleccione...</option>
+            <option value="true">Activo</option>
+            <option value="false">Inactivo</option>
+        </InputSelect>
+    </div>
+    <button type="submit" class="btn btn-success me-2">Guardar</button>
+    <button type="button" class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>
+</form>
+
+@code {
+    [SupplyParameterFromForm] private Usuario? Usuario { get; set; }
+
+    [Parameter] public int? Id { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Usuario ??= new();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id.HasValue)
+        {
+            var user = await UsuarioRepository.GetByIdAsync(Id.Value);
+            if (user != null)
+            {
+                Usuario = user;
+            }
+        }
+        else
+        {
+            Usuario!.FechaRegistro = DateTime.Now;
+            Usuario.Estado = true;
+        }
+    }
+
+    private async Task GuardarUsuario()
+    {
+        if (Usuario == null) return;
+        if (!Id.HasValue)
+        {
+            Usuario.FechaRegistro = DateTime.Now;
+            await UsuarioRepository.AddAsync(Usuario);
+        }
+        else
+        {
+            await UsuarioRepository.UpdateAsync(Usuario);
+        }
+
+        Navigation.NavigateTo("/Usuarios");
+    }
+
+    private void Cancelar()
+    {
+        Navigation.NavigateTo("/Usuarios");
+    }
+
+}

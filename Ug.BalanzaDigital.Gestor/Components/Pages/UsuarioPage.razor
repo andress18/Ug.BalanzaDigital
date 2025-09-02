@@ -1,0 +1,80 @@
+﻿@page "/Usuarios"
+@using Ug.BalanzaDigital.Data.Entities
+@using Ug.BalanzaDigital.Data
+@inject Repository<Usuario> UsuarioRepository
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+@code {
+    private List<Usuario> Usuarios { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Usuarios = (await UsuarioRepository.GetAllAsync()).ToList();
+    }
+
+    private void IrACrearUsuario()
+    {
+        Navigation.NavigateTo("/Usuarios/Crear");
+    }
+
+    void GoToEdit(int id)
+        => Navigation.NavigateTo($"/Usuarios/Editar/{id}");
+
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3>Lista de Usuarios</h3>
+        <button class="btn btn-primary" @onclick="IrACrearUsuario">
+            <i class="bi bi-plus-lg"></i> Nuevo Usuario
+        </button>
+    </div>
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>Id</th>
+            <th>Usuario</th>
+            <th>Email</th>
+            <th>Fecha Registro</th>
+            <th>Estado</th>
+            <th>Comuna</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        @if (Usuarios.Any())
+        {
+            @foreach (var usuario in Usuarios)
+            {
+                <tr>
+                    <td>@usuario.Id</td>
+                    <td>@usuario.Username</td>
+                    <td>@usuario.Email</td>
+                    <td>@usuario.FechaRegistro?.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        @if (usuario.Estado == true)
+                        {
+                            <span class="badge bg-success">Activo</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Inactivo</span>
+                        }
+                    </td>
+                    <td>@usuario.Comuna</td>
+                    <td>
+                        <button class="btn btn-secondary" @onclick="() => GoToEdit(usuario.Id)">Editar</button>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7" class="text-center">No hay usuarios registrados.</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
