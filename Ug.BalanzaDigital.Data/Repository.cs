@@ -7,7 +7,7 @@ namespace Ug.BalanzaDigital.Data;
 public class Repository<T> : IRepository<T> where T : class
 {
     private readonly BalanzaDigitalContext _context;
-    private readonly DbSet<T> _dbSet;
+    public readonly DbSet<T> _dbSet;
 
     public Repository(BalanzaDigitalContext context)
     {

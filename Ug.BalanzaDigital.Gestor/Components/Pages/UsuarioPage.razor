@@ -37,8 +37,6 @@
             <th>Usuario</th>
             <th>Email</th>
             <th>Fecha Registro</th>
-            <th>Estado</th>
-            <th>Comuna</th>
             <th>Acciones</th>
         </tr>
         </thead>
@@ -51,18 +49,7 @@
                     <td>@usuario.Id</td>
                     <td>@usuario.Username</td>
                     <td>@usuario.Email</td>
-                    <td>@usuario.FechaRegistro?.ToString("dd/MM/yyyy")</td>
-                    <td>
-                        @if (usuario.Estado == true)
-                        {
-                            <span class="badge bg-success">Activo</span>
-                        }
-                        else
-                        {
-                            <span class="badge bg-secondary">Inactivo</span>
-                        }
-                    </td>
-                    <td>@usuario.Comuna</td>
+                    <td>@usuario.FechaRegistro.ToString("dd/MM/yyyy")</td>
                     <td>
                         <button class="btn btn-secondary" @onclick="() => GoToEdit(usuario.Id)">Editar</button>
                     </td>

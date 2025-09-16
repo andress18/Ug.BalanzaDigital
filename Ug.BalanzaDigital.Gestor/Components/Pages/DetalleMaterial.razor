@@ -1,0 +1,40 @@
+@page "/detalle-material"
+
+@code {
+
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h3 class="text-center mb-4">Detalle de Material de Reciclaje</h3>
+        <form>
+            <div class="mb-3">
+                <label class="form-label">Nombre del material</label>
+                <input type="text" class="form-control" placeholder="Ej: Botellas plásticas">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Tipo de material</label>
+                <select class="form-select">
+                    <option selected disabled>Seleccione...</option>
+                    <option>Plástico</option>
+                    <option>Vidrio</option>
+                    <option>Papel</option>
+                    <option>Metal</option>
+                    <option>Otro</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Descripción</label>
+                <textarea class="form-control" rows="3" placeholder="Detalles del material..."></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Estado</label>
+                <select class="form-select">
+                    <option>Activo</option>
+                    <option>Inactivo</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Guardar Material</button>
+        </form>
+    </div>
+</div>

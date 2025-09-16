@@ -1,0 +1,56 @@
+@page "/materiales-reciclados"
+@using Microsoft.EntityFrameworkCore
+@using Ug.BalanzaDigital.Contracts.Repository
+@using Ug.BalanzaDigital.Data
+@using Ug.BalanzaDigital.Data.Entities
+@inject Repository<MaterialReciclado> MaterialRecicladoRepository
+@inject Repository<TipoMaterial> TipoMaterialRepository
+@inject Repository<Tamanio> TamanioRepository
+
+@code {
+    private IEnumerable<MaterialReciclado> materialesReciclados = [];
+    private IEnumerable<TipoMaterial> tiposMaterial = [];
+    private IEnumerable<Tamanio> tamanios = [];
+    protected override async Task OnInitializedAsync()
+    {
+        MaterialRecicladoRepository._dbSet.Include(m => m.Tipo)
+        .Include(m => m.Tamanio);
+        materialesReciclados = await MaterialRecicladoRepository.GetAllAsync();
+        tiposMaterial = await TipoMaterialRepository.GetAllAsync();
+        tamanios = await TamanioRepository.GetAllAsync();
+    }
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h3 class="text-center mb-4">Materiales Reciclados</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Tipo de Material</th>
+                    <th>Peso (kg)</th>
+                    <th>Tamaño</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (materialesReciclados != null && materialesReciclados.Any())
+                {
+                    foreach (var material in materialesReciclados)
+                    {
+                        <tr>
+                            <td>@(tiposMaterial.FirstOrDefault(t => t.Id == material.TipoId)?.Nombre)</td>
+                            <td>@material.Peso</td>
+                            <td>@(tamanios.FirstOrDefault(t => t.Id == material.TamanioId)?.Nombre)</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="3" class="text-center">No hay materiales reciclados disponibles.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

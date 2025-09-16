@@ -1,0 +1,72 @@
+@page "/ingreso-producto"
+@using Ug.BalanzaDigital.Data.Entities
+@using Ug.BalanzaDigital.Data
+@inject Repository<MaterialReciclado> MaterialRecicladoRepository
+@inject Repository<Tamanio> TamanioRepository
+@inject NavigationManager Navigation
+@inject Repository<TipoMaterial> TipoMaterialRepository
+@inject IJSRuntime JSRuntime
+
+
+@code {
+    [SupplyParameterFromForm]
+    private MaterialReciclado? material { get; set; }
+    private IEnumerable<TipoMaterial> tiposMaterial = [];
+    private IEnumerable<Tamanio> tamanios = [];
+    override protected async Task OnInitializedAsync()
+    {
+        // await JSRuntime.InvokeVoidAsync("alert", "Material guardado exitosamente!");
+        // Cargar tipos de material desde el repositorio o servicio
+        material ??= new MaterialReciclado();
+        tiposMaterial = await TipoMaterialRepository.GetAllAsync();
+        tamanios = await TamanioRepository.GetAllAsync();
+    }
+
+    private async Task GuardarMaterial()
+    {
+        if (material == null)
+        {
+            //  await JSRuntime.InvokeVoidAsync("alert", "Error: El material no puede ser nulo.");
+            return;
+        }
+        await MaterialRecicladoRepository.AddAsync(material);
+        // await JSRuntime.InvokeVoidAsync("alert", "Material guardado exitosamente!");
+        Navigation.NavigateTo("/materiales-reciclados");
+    }
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h3 class="text-center mb-4">Ingreso de Material Reciclaje</h3>
+        <EditForm Model="@material" OnSubmit="GuardarMaterial" FormName="MaterialForm">
+            <DataAnnotationsValidator />
+            <div class="mb-3">
+                <label class="form-label">Tipo de material</label>
+                <InputSelect class="form-select" @bind-Value="material!.TipoId">
+                    <option disabled value="">Seleccione un material</option>
+                    @foreach (var tipo in tiposMaterial)
+                    {
+                        <option value="@tipo.Id">@tipo.Nombre</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Peso (kg)</label>
+                <InputNumber class="form-control" @bind-Value="material!.Peso" />
+            </div>
+            @* Tamaño *@
+            <div class="mb-3">
+                <label class="form-label">Tamaño</label>
+                <InputSelect class="form-select" @bind-Value="material!.TamanioId">
+                    <option disabled value="">Seleccione un tamaño</option>
+                    @foreach (var tamanio in tamanios)
+                    {
+                        <option value="@tamanio.Id">@tamanio.Nombre (@tamanio.RangoAlturaAnchura)</option>
+                    }
+                </InputSelect>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Guardar Ingreso</button>
+        </EditForm>
+    </div>
+</div>

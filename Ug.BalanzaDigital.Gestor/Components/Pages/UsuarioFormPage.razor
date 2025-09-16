@@ -9,35 +9,24 @@
 <h3>@(!Id.HasValue ? "Crear Usuario" : "Editar Usuario")</h3>
 
 <form method="post" @formname="UserForm" @onsubmit="GuardarUsuario">
-    <AntiforgeryToken/>
+    <AntiforgeryToken />
 
     <div class="mb-2">
         <label class="form-label">Nombre de usuario</label>
-        <InputText class="form-control" @bind-Value="Usuario!.Username" required/>
+        <InputText class="form-control" @bind-Value="Usuario!.Username" required />
     </div>
     <div class="mb-2">
         <label class="form-label">Contraseña</label>
-        <InputText class="form-control" @bind-Value="Usuario!.Password" type="password" required/>
+        <InputText class="form-control" @bind-Value="Usuario!.Password" type="password" required />
     </div>
     <div class="mb-2">
         <label class="form-label">Email</label>
-        <InputText class="form-control" @bind-Value="Usuario!.Email" type="email"/>
+        <InputText class="form-control" @bind-Value="Usuario!.Email" type="email" />
     </div>
-    <div class="mb-2">
-        <label class="form-label">Comuna</label>
-        <InputText class="form-control" @bind-Value="Usuario!.Comuna" required/>
-    </div>
+
     <div class="mb-2">
         <label class="form-label">Rol</label>
-        <InputNumber class="form-control" @bind-Value="Usuario!.RolId" required/>
-    </div>
-    <div class="mb-2">
-        <label class="form-label">Estado</label>
-        <InputSelect class="form-select" @bind-Value="Usuario!.Estado">
-            <option value="">Seleccione...</option>
-            <option value="true">Activo</option>
-            <option value="false">Inactivo</option>
-        </InputSelect>
+        <InputNumber class="form-control" @bind-Value="Usuario!.RolId" required />
     </div>
     <button type="submit" class="btn btn-success me-2">Guardar</button>
     <button type="button" class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>
@@ -66,7 +55,6 @@
         else
         {
             Usuario!.FechaRegistro = DateTime.Now;
-            Usuario.Estado = true;
         }
     }
 

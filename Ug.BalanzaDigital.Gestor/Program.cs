@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Ug.BalanzaDigital.Contracts.Repository;
 using Ug.BalanzaDigital.Data;
 using Ug.BalanzaDigital.Data.DbContexts;
 using Ug.BalanzaDigital.Gestor.Components;
@@ -15,6 +16,15 @@ builder.Services.AddDbContext<BalanzaDigitalContext>(options => { options.UseInM
 builder.Services.AddScoped(typeof(Repository<>));
 
 var app = builder.Build();
+
+// Agregar esto para asegurar la creación y el seed de la base de datos en memoria
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<BalanzaDigitalContext>();
+    db.Database.EnsureCreated();
+}
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
