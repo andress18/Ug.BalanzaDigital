@@ -10,7 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddDbContext<BalanzaDigitalContext>(options => { options.UseInMemoryDatabase("TestDb"); });
+// builder.Services.AddDbContext<BalanzaDigitalContext>(options => { options.UseInMemoryDatabase("TestDb"); });
+builder.Services.AddDbContext<BalanzaDigitalMySqlContext>(options =>
+{
+    options.UseMySql(builder.Configuration.GetConnectionString("MySqlConnection"),
+        new MySqlServerVersion(new Version(8, 0, 32)));
+});
 
 
 builder.Services.AddScoped(typeof(Repository<>));
@@ -20,10 +25,9 @@ var app = builder.Build();
 // Agregar esto para asegurar la creación y el seed de la base de datos en memoria
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<BalanzaDigitalContext>();
+    var db = scope.ServiceProvider.GetRequiredService<BalanzaDigitalMySqlContext>();
     db.Database.EnsureCreated();
 }
-
 
 
 // Configure the HTTP request pipeline.
